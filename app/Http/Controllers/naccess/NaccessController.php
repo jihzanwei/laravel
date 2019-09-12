@@ -385,7 +385,10 @@ public function HttpPost($url,$post_data){
 //        dd($ww);
     }
 
-
+    public function jjj()
+    {
+       echo $GET('echostr');
+    }
 
 
 } 

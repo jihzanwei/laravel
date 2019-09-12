@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'liuyan_info','wechat/tangtang'
+        'liuyan_info','wechat/tangtang',
+        'naccess/jjj'
     ];
 }

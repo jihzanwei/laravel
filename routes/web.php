@@ -254,7 +254,7 @@ Route::post('/naccess/do_update','naccess\NaccessController@do_update');
 Route::get('/naccess/index','naccess\NaccessController@index');
 Route::get('/naccess/naccess_user','naccess\NaccessController@naccess_user');
 Route::post('/naccess/add_ll','naccess\NaccessController@add_ll');
-
+Route::get('/naccess/jjj','naccess\NaccessController@jjj');
 
 //模板
 Route::get('/moban/moban_add','moban\MobanController@moban_add');

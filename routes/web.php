@@ -235,13 +235,36 @@ Route::get('/naccess/get_list','naccess\NaccessController@get_list');
 Route::get('/naccess/do_login','naccess\NaccessController@do_login');
 Route::get('/naccess/code','naccess\NaccessController@code');
 Route::get('/naccess/login','naccess\NaccessController@login');
+// 上传
+
+Route::post('/naccess/do_upload','naccess\NaccessController@do_upload');
+Route::get('/naccess/source','WechatController@wechat_source'); //素材管理
+Route::get('/naccess/upload','naccess\NaccessController@upload'); 
+
+Route::get('/naccess/clear_api','naccess\NaccessController@clear_api'); 
+
+
+//标签 
+Route::get('/naccess/get_label','naccess\NaccessController@get_label');
+Route::post('/naccess/do_get_label','naccess\NaccessController@do_get_label');
+Route::get('/naccess/biaoqian','naccess\NaccessController@biaoqian');
+Route::get('/naccess/naccess_del','naccess\NaccessController@naccess_del');
+Route::get('/naccess/update/{name}','naccess\NaccessController@update');
+Route::post('/naccess/do_update','naccess\NaccessController@do_update');
+Route::get('/naccess/index','naccess\NaccessController@index');
+Route::get('/naccess/naccess_user','naccess\NaccessController@naccess_user');
+Route::post('/naccess/add_ll','naccess\NaccessController@add_ll');
+
+
+//模板
+Route::get('/moban/moban_add','moban\MobanController@moban_add');
 // 调用中间件
 Route::group(['middleware'=>['login']],function(){
     // 添加学生信息
 Route::get('/student/add','StudentController@add');
 });
 
-
+    
 
 // 修改中间件
 Route::group(['middleware'=>['update']],function(){

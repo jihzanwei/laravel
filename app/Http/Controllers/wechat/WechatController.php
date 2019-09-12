@@ -335,7 +335,7 @@ class WechatController extends Controller
 
     public function add_tang(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $openid_info=DB::connection('access')->table('token')->whereIn('id',$request->all()['id_list'])->select(['openid'])->get()->toArray();
         $openid_list=[];
         foreach($openid_info as $v){

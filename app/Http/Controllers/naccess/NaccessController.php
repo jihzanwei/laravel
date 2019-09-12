@@ -387,7 +387,8 @@ public function HttpPost($url,$post_data){
 
     public function jjj()
     {
-       echo $GET('echostr');
+//        echo 111;
+       echo $_GET['echostr'];
     }
 
 

@@ -195,13 +195,12 @@ Route::get('monthly/del','monthly\Monthly@del');
 
 //留言
 Route::get('/liuyan/token','liuyan\liuyanController@token');
-Route::get('/liuyan/login','liuyan\liuyanController@login');
+Route::get('/liuyan/do_login','liuyan\liuyanController@do_login');
 Route::get('/liuyan/get_list','liuyan\liuyanController@get_list');
-Route::get('/liuyan/liuyanadd/{id}','liuyan\liuyanController@liuyanadd');
+Route::post('/liuyan/liuyan_add','liuyan\liuyanController@liuyan_add');
 Route::get('/liuyan/index','liuyan\liuyanController@index');
 Route::post('/liuyan/liuyan_doadd','liuyan\liuyanController@liuyan_doadd');
 Route::get('/liuyan/login','liuyan\liuyanController@login');
-Route::get('/liuyan/do_login','liuyan\liuyanController@do_login');
 Route::get('/liuyan/code','liuyan\liuyanController@code');
 
 

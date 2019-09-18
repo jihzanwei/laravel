@@ -46,7 +46,7 @@ class NaccessController extends Controller
     public function get_info()
     {
     	$token =$this->token();
-    	$url= "https://api.weixin.qq.com/cgi-bin/user/get?access_token=$token&next_openid=";
+    	$url= "https://api.w eixin.qq.com/cgi-bin/user/get?access_token=$token&next_openid=";
     	$user = file_get_contents($url);
     	// $user = '{"total":3,"count":3,"data":{"openid":["o9Ctgszba4fqicoXdzd8IeMRe2eI","o9Ctgs-q1QeT8KBGAWtduMqZ9IJw","o9Ctgs9dT6l8-0k_iuiyF9Sgtzf8"]},"next_openid":"o9Ctgs9dT6l8-0k_iuiyF9Sgtzf8"}';
     	// dd($user);
@@ -175,7 +175,7 @@ public function HttpPost($url,$post_data){
 
     	  $url = 'https://api.weixin.qq.com/cgi-bin/clear_quota?access_token='.$this->tools->get_wechat_access_token();
         $data = ['appid'=>env('WECHAT_APPID')];
-        $this->Httppost($url,json_encode($data));
+        $this->tools->curl_post($url,json_encode($data));
     }
 
 
@@ -385,11 +385,8 @@ public function HttpPost($url,$post_data){
 //        dd($ww);
     }
 
-    public function jjj()
-    {
-//        echo 111;
-       echo $_GET['echostr'];
-    }
+
+    
 
 
 } 

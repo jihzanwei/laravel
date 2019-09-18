@@ -14,12 +14,12 @@
 		</tr>
 		<tr>
 			<td>
-				密码：<input type="text" name = 'password'>
+				密码：<input type="password" name = 'pwd'>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="{{url('/liuyan/login')}}">登录</a>
+				<a href="{{url('/liuyan/do_login')}}">登录</a>
 			</td>
 		</tr>
 	</form>

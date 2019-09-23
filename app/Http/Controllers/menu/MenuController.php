@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use DB;
-use phpDocumentor\Reflection\Location;;
+use phpDocumentor\Reflection\Location;
 
 /**
  * 

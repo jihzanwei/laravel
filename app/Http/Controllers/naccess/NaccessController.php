@@ -135,6 +135,7 @@ public function HttpPost($url,$post_data){
             //存在
             // echo 11;die;
             $request->session()->put('uid',$openid);
+            return redirect('naccess/biaoqian');
         }else{
             //不存在
             // echo 22;die;
@@ -154,6 +155,7 @@ public function HttpPost($url,$post_data){
             ]);
             DB::rollBack();
             $request->session()->put('uid',$openid);
+            return redirect('naccess/biaoqian');
         }
         
 	}

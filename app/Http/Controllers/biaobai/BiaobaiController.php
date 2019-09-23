@@ -18,10 +18,10 @@ class BiaobaiController extends Controller
     {
         // dd(111);
         $uid = $request->session()->get('uid');
-        // echo $uid.'<br/>';
+        // echo $uid.'<br/>';die;
         $openid_list = $this->wechat->app->user->list($nextOpenId = null);
 //        $openid_info  = $openid_list['data']['openid'];
-//        dd($openid_info);
+       // dd($openid_info);
         return view('biaobai.index',['info'=>$openid_list['data']['openid']]);
     }
     public function send(Request $request)

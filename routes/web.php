@@ -257,6 +257,11 @@ Route::get('/naccess/jjj','naccess\NaccessController@jjj');
 
 //模板
 Route::get('/moban/moban_add','moban\MobanController@moban_add');
+
+
+//自定义操蛋
+Route::get('/menua/index','menua\menuaController@index');
+Route::get('/menua/token','menua\menuaController@token');
 // 调用中间件
 Route::group(['middleware'=>['login']],function(){
     // 添加学生信息

@@ -322,6 +322,7 @@ class WechatController extends Controller
 
     public function tang_user(Request $request)
     {
+        // dd($request->all());
         $url='https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token='.$this->wechat->get_access_token();
         $data=[
           'tagid'=>$request->all()['id'],
@@ -432,7 +433,7 @@ class WechatController extends Controller
     public function push_tang(Request $request)
     {
         $re=$this->wechat->tag_user($request->all()['tag_id']);
-//        dd($re);
+       dd($re);
         return view('wechat/push_tang',['tag_id'=>$request->all()['tag_id']]);
     }
     // 执行

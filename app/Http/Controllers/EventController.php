@@ -25,10 +25,10 @@ class EventController extends Controller
                 $share_code = explode('_',$xml_arr['EventKey'])[1];
                 $user_openid = $xml_arr['FromUserName']; //粉丝openid
                 //判断openid是否已经在日志表
-                $wechat_openid = DB::connection('mysql_cart')->table('wechat_openid')->where(['openid'=>$user_openid])->first();
-                if(empty($wechat_openid)){
-                    DB::connection('mysql_cart')->table('user')->where(['id'=>$share_code])->increment('share_num',1);
-                    DB::connection('mysql_cart')->table('wechat_openid')->insert([
+                $user_weixin = DB::connection('naccess')->table('user_weixin')->where(['openid'=>$user_openid])->first();
+                if(empty($user_weixin)){
+                    DB::connection('naccess')->table('user_weixin')->where(['id'=>$share_code])->increment('share_num',1);
+                    DB::connection('naccess')->table('user_weixin')->insert([
                         'openid'=>$user_openid,
                         'add_time'=>time()
                     ]);

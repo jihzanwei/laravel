@@ -47,7 +47,9 @@ class NaccessController extends Controller
     {
     	$token =$this->token();
     	$url= "https://api.w eixin.qq.com/cgi-bin/user/get?access_token=$token&next_openid=";
+        // dd($url);
     	$user = file_get_contents($url);
+        dd($user);
     	// $user = '{"total":3,"count":3,"data":{"openid":["o9Ctgszba4fqicoXdzd8IeMRe2eI","o9Ctgs-q1QeT8KBGAWtduMqZ9IJw","o9Ctgs9dT6l8-0k_iuiyF9Sgtzf8"]},"next_openid":"o9Ctgs9dT6l8-0k_iuiyF9Sgtzf8"}';
     	// dd($user);
     	$use = json_decode($user,true);
@@ -55,10 +57,10 @@ class NaccessController extends Controller
     	 return $use['data']['openid'];
     }
     public function get_list()
-    {	
+    {	 
     	$token =$this->token();
     	// dd($token);
-    	$use=$this->get_info();
+    	$use=$this->get_info(); 
     	// dd($use);
     	$arr = [];
     	foreach ($use as $k => $v) {
@@ -341,54 +343,117 @@ public function HttpPost($url,$post_data){
 //        $aa = $request->all()['tag_id'];
 //         dd($aa);
 //         dd($tag_id);
-        $openid_info=DB::connection('access')->table('token')->get();
+        $openid_info=DB::connection('access')->table('token')->get();  
 //         dd($openid_info);
         return view('naccess/index',['data'=>$openid_info,'tag_id'=>$tag_id]);
     }
     //打标签
     public function add_ll(Request $request)
     {
-//        dd($request->all());
+       // dd($request->all());
         $openid_info=DB::connection('access')->table('token')->whereIn('id',$request->all()['id_list'])->select(['openid'])->get()->toArray();
         $openid_list=[];
         foreach($openid_info as $v){
             $openid_list[] = $v->openid;
         }
-        dd($openid_list);
-        $url='https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token='.$this->wechat->get_access_token();
+        // dd($openid_list);
+        $url='https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token='.$this->token();
         $data=[
             'openid_list'=>$openid_list,
             'tagid'=>$request->all()['tagid'],
         ];
-        //dd($data);
-        $re=$this->wechat->post($url,json_encode($data));
-//        dd($re);
+        // dd($data);
+        // dd(json_encode($data));
+        $re=$this->HttpPost($url,json_encode($data));
+       // dd($re);
         $arr=json_decode($re,1);
-//        dd($arr);
+       // dd($arr);
         if($arr['errcode']==0){
-            return redirect('wechat/get_label_list');
+            return redirect('naccess/biaoqian');
         }else{
             echo "未知错误";
         }
     }
 
     //获取标签下的粉丝
+    //
+    ///获取标签
     public function naccess_git_list()
     {
         $url='https://api.weixin.qq.com/cgi-bin/tags/get?access_token='.$this->token();
         $re=file_get_contents($url);
         $tag_info=json_decode($re);
+        // dd($tag_info);
         return $tag_info;
     }
-
-    public function naccess_user()
-    {
+    //获取标签下的粉丝列表
+    public function naccess_user(Request $request)
+    { 
+         // dd($request->all());
         $ww =$this->naccess_git_list();
-//        dd($ww);
+       // dd($ww);
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token='.$this->token();
+        dd($request->all());
+           $data=[
+          'tagid'=>$request->all()['id'],
+          'next_openid'=> ''
+        ];
+        $re=$this->HttpPost($url,json_encode($data));
+        // dd($re);
+        $arr=json_decode($re,1)['data']['openid'];
+       // dd($arr);
+        return view('naccess/naccess_user',['arr'=>$arr]);
+
     }
 
+     // 根据标签为用户推送消息
+    public function naccess_push(Request $request)
+    {
+        $re=$this->tag_user($request->all()['tag_id']);
+       // dd($re);
+        return view('naccess/naccess_push',['tag_id'=>$request->all()['tag_id']]);
+    }
+    // 执行
+    public function do_naccess_push(Request $request)   
+    {
+//        dd($request->all());
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token='.$this->token();
+        $push_type=$request->all()['push_type'];
+        if($push_type == 1){
+            // 文本消息
+            $data=[
+                'filter'=>['is_to_all'=>false,'tag_id'=>$request->all()['tag_id']],
+                'text'=>['content'=>$request->all()['message']],
+                'msgtype'=>'text'
+            ];
+//            dd($data);
+        }elseif($push_type == 2){
+            // 素材消息 图
+            $data=[
+                'filter'=>['is_to_all'=>false,'tag_id'=>$request->all()['tag_id']],
+                'text'=>['media_id'=>$request->all()['media_id']],
+                'msgtype'=>'image'
+            ];
+        }
+        $re=$this->HttpPost($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+        $obj=json_decode($re,1);
+        if($obj){
+            echo '欧拉';
+            return redirect('naccess/biaoqian');
+        }
+    }
+        public function tag_user($tag_id)
+    {
+        $url='https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token='.$this->token();
+        // dd($tag_id);
+        $data=[
+          'tagid'=>$tag_id,
+          'next_openid'=>''
+        ];
+        $re=$this->HttpPost($url,json_encode($data));
+        $obj=json_decode($re,1);
+        // dd($obj);
+        return $obj;
+    }
 
-    
-
-
-} 
+}

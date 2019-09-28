@@ -53,7 +53,7 @@ Route::get('/home/order_detail','home\indexController@order_detail');
 Route::get('/home/order_index','home\indexController@order_index');
 
 //月考
-Route::get('/kaoshi/kaoshi_list','kaoshi\KaoshiController@kaoshi_list');
+Route::get('/kaoshi/token','kaoshi\KaoshiController@token');
 Route::post('/kaoshi/do_kaoshi','kaoshi\KaoshiController@do_kaoshi');
 
 
@@ -253,6 +253,10 @@ Route::post('/naccess/do_update','naccess\NaccessController@do_update');
 Route::get('/naccess/index','naccess\NaccessController@index');
 Route::get('/naccess/naccess_user','naccess\NaccessController@naccess_user');
 Route::post('/naccess/add_ll','naccess\NaccessController@add_ll');
+Route::get('/naccess/naccess_git_list','naccess\NaccessController@naccess_git_list');
+Route::get('/naccess/naccess_push','naccess\NaccessController@naccess_push');
+Route::get('/naccess/tag_user','naccess\NaccessController@tag_user');
+Route::post('/naccess/do_naccess_push','naccess\NaccessController@do_naccess_push');
 Route::get('/naccess/jjj','naccess\NaccessController@jjj');
 
 //模板

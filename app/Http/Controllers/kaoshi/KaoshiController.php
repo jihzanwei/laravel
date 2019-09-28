@@ -15,37 +15,29 @@ use phpDocumentor\Reflection\Location;;
  */
 class kaoshiController extends Controller
 {
-	public $wechat;
 	
-	public function __construct(Wechat $wechat)
-	{
-		$this->wechat = $wechat;
-
-	}
-
 	
-	public 	function kaoshi_list()
-	{
+		public function token()
+			{
 
-		return view('kaoshi.kaoshi_list');
-	}
-	public function do_kaoshi(Request $request)
-	{
-			 $req = $request->all();
-			 // dd($req);
-		 $info = DB::connection('access')->table('kaoshi')->insert([
-		 	'one' => $req['one'],
-		 	'two' => $req['two'],
-		 	'three' => $req['three'],
-		 	'four' => $req['four']
+			    $redis = new \Redis();
+			    $redis->connect('127.0.0.1','6379');
+			    //加入缓存
+			    $access_token_key = 'wechat_access_token';
+			    if($redis->exists($access_token_key)){
+			        //存在
+			        return $redis->get($access_token_key);
+			    }else{
+			        //不存在
+			        $result = file_get_contents('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WECHAT_APPID').'&secret='.env('WECHAT_APPSECRET'));
+			        $re = json_decode($result,1);
+			        $redis->set($access_token_key,$re['access_token'],$re['expires_in']);  //加入缓存
+			        return $re['access_token'];
+			    }
+			    // dd($token);
 
-		 ]);
-		 if($info){
-		 	echo 1;
-		 }else{
-		 	echo 2;
-		 }
-	}
+			}
+
 	
 
 

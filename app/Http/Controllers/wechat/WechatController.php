@@ -500,7 +500,7 @@ class WechatController extends Controller
         $xml = (array)$xml; //转化成数组
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
-//        dd($xml);
+       dd($xml);
         if($xml['MsgType']=='event'){
             if($xml['Event']=='subscribe'){
                 if(isset($xml['EventKey'])){

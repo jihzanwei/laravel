@@ -34,9 +34,9 @@ class MenuaController extends Controller
                 'url'=>'http://www.jishiwl.cn/menua/index'
             ],
             [
-                'name'=>'查看签到',
+                'name'=>'绑定账号',
                 'type'=>'view',
-                'url'=>'http://www.jishiwl.cn/menua/index'
+                'url'=>'http://www.jishiwl.cn/aadmin/insert'
             ]];
         // var_dump(json_encode($data));die;
          // var_dump($data);die;

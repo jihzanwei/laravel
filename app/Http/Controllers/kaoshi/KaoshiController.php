@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use DB;
 use phpDocumentor\Reflection\Location;
-use App\Http\Controllers\Event;
+
 /**
  *
  */
@@ -35,6 +35,38 @@ class kaoshiController extends Controller
             return $re['access_token'];
         }
         // dd($token);
+
+    }
+
+     public function huifu()
+    {
+
+        $data = file_get_contents("php://input");
+        // dd($data);
+        //解析XML
+        $xml = simplexml_load_string($data,'SimpleXMLElement', LIBXML_NOCDATA);        //将 xml字符串 转换成对象
+        $xml = (array)$xml; //转化成数组
+        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
+        file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
+       // dd($xml);
+        if($xml['MsgType']=='event'){
+            if($xml['Event']=='subscribe'){
+                if(isset($xml['EventKey'])){
+                    $agent_code=explode('_',$xml['EventKey'])[1];
+                    $dataa=DB::connection('naccess')->table('user_agent')->where(['openid'=>$xml['FromUserName']])->first();
+                    if(empty($dataa)){
+                        $datas=DB::connection('naccess')->table('user_agent')->insert(['uid'=>$agent_code,'openid'=>$xml['FromUserName'],'add_time'=>time()]);
+                    }
+                    $message = '你好,111!';
+                    $xml_str='<xml><ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$message.']]></Content></xml>';
+                    echo $xml_str;
+                }
+            }
+        }elseif($xml['MsgType']=='text'){
+            $message = '你好!222';
+            $xml_str = '<xml><ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$message.']]></Content></xml>';
+            echo $xml_str;
+        }
 
     }
 

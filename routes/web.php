@@ -54,7 +54,7 @@ Route::get('/home/order_index','home\indexController@order_index');
 
 //月考
 Route::get('/kaoshi/token','kaoshi\KaoshiController@token');
-Route::post('/kaoshi/do_kaoshi','kaoshi\KaoshiController@do_kaoshi');
+Route::get('/kaoshi/huifu','kaoshi\KaoshiController@huifu');
 
 
 
@@ -173,7 +173,7 @@ Route::post('/wechat/do_get_update','wechat\WechatController@do_get_update');
 Route::get('wechat/push_tang','wechat\WechatController@push_tang');
 Route::post('wechat/do_push_tang','wechat\WechatController@do_push_tang');
 Route::get('wechat/ticket','wechat\WechatController@ticket');
-Route::post('wechat/tangtang','wechat\WechatController@tangtang');
+Route::get('wechat/tangtang','wechat\WechatController@tangtang');
 ///////////////////////////////////////////////////////////////////////////////////////
 Route::get('agent/user_list','agent\AgentController@user_list');
 Route::get('agent/creat_qrcode','agent\AgentController@creat_qrcode');
@@ -204,6 +204,11 @@ Route::get('/liuyan/login','liuyan\liuyanController@login');
 Route::get('/liuyan/code','liuyan\liuyanController@code');
 
 
+
+//9月
+Route::get('/aadmin/login','aadmin\AadminController@login');
+Route::get('/aadmin/index','aadmin\AadminController@index');
+Route::get('/aadmin/insert','aadmin\AadminController@insert');
 
 
 

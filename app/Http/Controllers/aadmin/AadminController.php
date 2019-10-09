@@ -28,13 +28,15 @@ public function __construct(Tools $tools)
 	}
 	public function insert()
 	{
+		$openid = $this->tools->getOpenid();
 		return view('aadmin.insert');
 	
 	}
 	public function do_insert(Request $request)
 	{
-		$openid=$this->tools->getOpenid();
+		$openid = session('openid');
 		$data = $request->all();
+		// dd($data);
 		$name=$data['name'];
 		$pwd=$data['pwd'];
 		$info=DB::connection('access')->table('aadmin')->first();

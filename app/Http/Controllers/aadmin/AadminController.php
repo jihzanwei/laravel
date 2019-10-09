@@ -35,6 +35,7 @@ public function __construct(Tools $tools)
 	public function do_insert(Request $request)
 	{
 		$openid = session('openid');
+		
 		$data = $request->all();
 		// dd($data);
 		$name=$data['name'];
@@ -45,6 +46,7 @@ public function __construct(Tools $tools)
 			$info=DB::connection('access')->table('aadmin')->where(['name'=>$name,'pwd'=>$pwd])->update([
 				'openid'=>$openid
 			]);
+			echo '绑定成功';
 		}
 	}
 	public function do_code(Request $request)

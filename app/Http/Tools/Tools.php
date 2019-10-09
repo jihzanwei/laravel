@@ -50,7 +50,7 @@ class Tools {
         //显示获得的数据
         return $data;
     }
-     public static function getOpenid()
+     public  function getOpenid()
     {   
         //echo 1;die;
         //先去session里取openid 

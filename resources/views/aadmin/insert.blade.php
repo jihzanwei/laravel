@@ -1,17 +1,19 @@
-<html>
-	<head></head>
-	<body>
+@extends('layout.aadmin')
+@section('title','绑定账号')
+@section('content')
 		<center>
 			<h2>绑定账号</h2>
+		<form class="form-inline" action="{{url('aadmin/do_insert')}}" method='post'>
+			@csrf
 		<tr>
 			<td>
 			账号：<input type="text" name ='name'>
 			</td>
 			<td>
-			密码：<input type="text" name ='name'>
+			密码：<input type="password" name ='pwd'>
 			</td>
-			<td><button>确定绑定</button></td>
+			<button type="submit"class="btn btn-primary block full-width m-b">登 录</button>
 		</tr>
+		</form>
 		</center>
-	</body>
-</html>
+@endsection

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Openid;
+namespace App\Http\Tools;
 
 class Openid{
 
@@ -23,11 +23,11 @@ class Openid{
             $host = $_SERVER['HTTP_HOST'];  //域名
             $uri = $_SERVER['REQUEST_URI']; //路由参数
             $redirect_uri = urlencode("http://".$host.$uri);  // ?code=xx
-            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".self::appid."&redirect_uri={$redirect_uri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".env('WECHAT_APPID')."&redirect_uri={$redirect_uri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
             header("location:".$url);die;
         }else{
             //通过code换取网页授权access_token
-            $url =  "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".self::appid."&secret=".self::secret."&code={$code}&grant_type=authorization_code";
+            $url =  "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".env('WECHAT_APPID')."&secret=".env('WECHAT_APPSECRET')."&code={$code}&grant_type=authorization_code";
             $data = file_get_contents($url);
             $data = json_decode($data,true);
             $openid = $data['openid'];

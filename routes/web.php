@@ -209,6 +209,15 @@ Route::get('/liuyan/code','liuyan\liuyanController@code');
 Route::get('/aadmin/login','aadmin\AadminController@login');
 Route::get('/aadmin/index','aadmin\AadminController@index');
 Route::get('/aadmin/insert','aadmin\AadminController@insert');
+Route::any('/aadmin/do_insert','aadmin\AadminController@do_insert');
+Route::any('/aadmin/do_code','aadmin\AadminController@do_code');
+Route::any('/aadmin/send_code','aadmin\AadminController@send_code');
+
+
+
+
+
+
 
 
 

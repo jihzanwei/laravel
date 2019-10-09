@@ -6,8 +6,8 @@
 <base href="/hadmin/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <title> - 登录</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -34,14 +34,19 @@
             </div>
             <h3>欢迎使用 hAdmin</h3>
 
-            <form class="m-t" role="form" action="index.html">
+            <form class="m-t" role="form">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="用户名" required="">
+                    <input type="text" id= 'name'class="form-control" placeholder="用户名" >
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="密码" required="">
+                    <input type="password"id= 'pwd' class="form-control" placeholder="密码" >
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+                 <div class="form-group">
+                    <input type="text"  id = 'code' class="form-control" placeholder="验证码">
+                    <input type="button" id='q'  class="btn btn-primary block full-width m-b" value = "获取验证码" >
+
+                </div>
+                <button type="submit" id='a' class="btn btn-primary block full-width m-b">登 录</button>
 
                 
                 <img alt="image" class="img-circle" src="img\123.jpg">  
@@ -53,12 +58,89 @@
     </div>
 
     <!-- 全局js -->
-    <script src="js/jquery.min.js?v=2.1.4"></script>
-    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="{{asset('/js/jquery.min.js?v=2.1.4')}}"></script>
+    <script src="{{asset('/js/bootstrap.min.js?v=3.3.6')}}"></script>
+    
+    <script>
+     $(function(){
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
 
+         $('#q').click(function(){
+        // alert(111);die;
+        var name=$('#name').val();
+        var pwd=$('#pwd').val();
+        // alert(11)
+//        var tel=$('#tel').val();
+        // alert(cart)
+        $.ajax({
+            url: "{{url('aadmin/do_code')}}" ,
+            type: 'POST',
+            data: {name:name,pwd:pwd},
+            dataType: 'json',
+            success: function(data){
+                alert(data.content);
+            }
+        });
+        return false;
+    });
+
+
+    $('#a').click(function(){
+        var code=$('#code').val();
+        $.ajax({
+            url: "{{url('aadmin/send_code')}}" ,
+            type: 'POST',
+            data: {code:code},
+            dataType: 'json',
+            success: function(data){
+                alert(data.content);
+            }
+        });
+        return false;
+    });
+    $('#q').click(function(){
+        var name=$('#name').val();
+        var password=$('#password').val();
+        // alert(11)
+//        var tel=$('#tel').val();
+        // alert(cart)
+        $.ajax({
+            url: "{{url('aadmin/do_code')}}" ,
+            type: 'POST',
+            data: {name:name,password:password},
+            dataType: 'json',
+            success: function(data){
+                alert(data.content);
+            }
+        });
+        return false;
+    });
+
+
+    $('#a').click(function(){
+        var code=$('#code').val();
+        $.ajax({
+            url: "{{url('aadmin/send_code')}}" ,
+            type: 'POST',
+            data: {code:code},
+            dataType: 'json',
+            success: function(data){
+                alert(data.content);
+            }
+        });
+        return false;
+    })
+
+    });
+    
+
+</script>
     
     
 
 </body>
+
 
 </html>
